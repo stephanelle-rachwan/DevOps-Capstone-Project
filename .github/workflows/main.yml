@@ -1,3 +1,4 @@
+
 name: CI workflow 
 on: 
  push:
@@ -15,3 +16,9 @@ jobs:
        cache: maven 
    - name: Build the code using maven 
      run: mvn package 
+   - name: Install docker 
+     uses: docker/setup-buildx-action@v2
+   - name: Build an Image 
+     run: docker build -t githubactionimage:v1 .
+   - name: Run the Image 
+     run: docker run -d -P githubactionimage:v1
